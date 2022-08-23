@@ -3,7 +3,7 @@
 #include "timerselection.h"
 #include <iostream>
 
-void MainWindow::handleButton()
+void MainWindow::handleNewTimerButton()
 {
     TimerSelection *t = new TimerSelection(this);
     t->exec();
@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->pushButton, &QPushButton::released, this, &MainWindow::handleButton);
+    connect(ui->pushButton, &QPushButton::released, this, &MainWindow::handleNewTimerButton);
 }
 
 

@@ -6,6 +6,8 @@ TimerSelection::TimerSelection(QWidget *parent) :
     ui(new Ui::TimerSelection)
 {
     ui->setupUi(this);
+    connect(ui->pushButton_2, &QPushButton::released, this, &QDialog::reject);
+    connect(ui->pushButton, &QPushButton::released, this, &QDialog::accept);
 }
 
 TimerSelection::~TimerSelection()

@@ -15,6 +15,7 @@ public:
     explicit TimerSelection(QWidget *parent = nullptr);
     ~TimerSelection();
     int getMinutes();
+    int getSeconds();
 
 private:
     Ui::TimerSelection *ui;
