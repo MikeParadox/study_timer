@@ -14,9 +14,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void handleNewTimerButton();
+    void handleEditTimerButton();
+    void addTimer();
 
 private:
+    //void addTimer();
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

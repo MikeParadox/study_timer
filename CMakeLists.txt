@@ -23,6 +23,10 @@ set(PROJECT_SOURCES
         timerselection.h
         timerselection.cpp
         timerselection.ui
+
+        timeritem.h
+        timeritem.cpp
+        timeritem.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

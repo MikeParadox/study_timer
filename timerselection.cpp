@@ -6,8 +6,8 @@ TimerSelection::TimerSelection(QWidget *parent) :
     ui(new Ui::TimerSelection)
 {
     ui->setupUi(this);
-    connect(ui->pushButton_2, &QPushButton::released, this, &QDialog::reject);
-    connect(ui->pushButton, &QPushButton::released, this, &QDialog::accept);
+    connect(ui->canc, &QPushButton::released, this, &QDialog::reject);
+    connect(ui->save, &QPushButton::released, this, &QDialog::accept);
 }
 
 TimerSelection::~TimerSelection()
@@ -17,10 +17,10 @@ TimerSelection::~TimerSelection()
 
 int TimerSelection::getMinutes()
 {
-    return ui->spinBox->displayIntegerBase();
+    return ui->mins->displayIntegerBase();
 }
 
 int TimerSelection::getSeconds()
 {
-    return ui->spinBox_2->displayIntegerBase();
+    return ui->secs->displayIntegerBase();
 }
