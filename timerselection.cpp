@@ -24,8 +24,3 @@ std::chrono::minutes TimerSelection::getMinutes()
 {
     return std::chrono::minutes(ui->mins->value());
 }
-
-std::chrono::seconds TimerSelection::getSeconds()
-{
-    return std::chrono::seconds(ui->secs->value());
-}

@@ -12,7 +12,7 @@ void MainWindow::handleAddTimerButton()
     if(t->exec())
     {
         Timer *newTimer = new Timer(this);
-        newTimer->totalTime = t->getHours() + t->getMinutes() + t->getSeconds();
+        newTimer->totalTime = t->getHours() + t->getMinutes();
         newTimer->setTime(newTimer->totalTime);
         ui->verticalLayout_2->addWidget(newTimer);
         newTimer->show();
