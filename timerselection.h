@@ -14,8 +14,10 @@ class TimerSelection : public QDialog
 public:
     explicit TimerSelection(QWidget *parent = nullptr);
     ~TimerSelection();
-    int getMinutes();
-    int getSeconds();
+
+    std::chrono::hours getHours();
+    std::chrono::minutes getMinutes();
+    std::chrono::seconds getSeconds();
 
 private:
     Ui::TimerSelection *ui;

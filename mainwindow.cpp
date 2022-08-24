@@ -1,25 +1,22 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "timerselection.h"
-#include "timeritem.h"
-#include <iostream>
+#include "timer.h"
 
-void MainWindow::addTimer()
-{
-    std::cout << "accepted";
-}
+#include <chrono>
 
-void MainWindow::handleEditTimerButton()
+void MainWindow::handleAddTimerButton()
 {
-    //TimerSelection *t = new TimerSelection(this);
-    //t->exec();
-    //connect(t, &QDialog::finished, this, &MainWindow::addTimer);
-    TimerItem *newItem = new TimerItem(this);
-    newItem->setParent(ui->scrollAreaWidgetContents);
-    newItem->show();
-    TimerItem *anewItem = new TimerItem(this);
-    anewItem->setParent(ui->scrollAreaWidgetContents);
-    anewItem->show();
+    TimerSelection *t = new TimerSelection(this);
+    //connect(t, &TimerSelection::accepted, this, &MainWindow::addTimer);
+    if(t->exec())
+    {
+        Timer *newTimer = new Timer(this);
+        newTimer->totalTime = t->getHours() + t->getMinutes() + t->getSeconds();
+        newTimer->setTime(newTimer->totalTime);
+        ui->verticalLayout_2->addWidget(newTimer);
+        newTimer->show();
+    }
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->pushButton, &QPushButton::released, this, &MainWindow::handleEditTimerButton);
+    connect(ui->addTimerButton, &QPushButton::released, this, &MainWindow::handleAddTimerButton);
 }
 
 

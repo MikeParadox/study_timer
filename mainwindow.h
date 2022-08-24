@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <timerselection.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,11 +15,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void handleEditTimerButton();
-    void addTimer();
+
+    void handleAddTimerButton();
+    void addTimer(TimerSelection*);
 
 private:
-    //void addTimer();
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
