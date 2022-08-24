@@ -5,24 +5,29 @@
 #include <iostream>
 #include <thread>
 
+using seconds_t = std::chrono::seconds;
 using minutes_t = std::chrono::minutes;
 using hours_t = std::chrono::hours;
 using timePoint_t = std::chrono::time_point<std::chrono::system_clock>;
 
 /**
  * class to implement timer 
- * 
+ * the possibility to initialise a Timer using integral types was
+ *  ommited purposely, because providing just an integer would be ambiguous
+ *  in relation to time units
  */
+
+using namespace std::literals; // for using literals like 1s
+
 class Timer
 {
-    minutes_t mTimeForTimer;    // timePoint mStartTime{};
+    seconds_t mTimeForTimer;    // timePoint mStartTime{};
 public:
 
     Timer() = default;
     
     explicit Timer(hours_t timeForTimerHours, minutes_t timeForTimerMinutes)
-        : mTimeForTimer{ timeForTimerMinutes +
-        static_cast<minutes_t>(timeForTimerHours) }
+        : mTimeForTimer{ timeForTimerMinutes + timeForTimerHours }
     {}
 
     explicit Timer(hours_t timeForTimerHours)
@@ -33,23 +38,34 @@ public:
         : mTimeForTimer{ timeForTimerMinutes }
     {}
 
-    minutes_t getTimerTimeInMinutes() const { return mTimeForTimer; }
+    seconds_t getTimerTimeInMinutes() const { return mTimeForTimer; }
 
     void setTimeForTimer(int minutes)
     {
-        mTimeForTimer = static_cast<minutes_t>(minutes);
+        mTimeForTimer = static_cast<seconds_t>(minutes * 60);
     }
     void setTimeForTimer(int minutes, int hours)
     {
-        mTimeForTimer = static_cast<minutes_t>(minutes + hours * 60);
+        mTimeForTimer = static_cast<seconds_t>(minutes * 60 + hours * 3600);
     }
 
+    void changeExistingTimer(int hours, int minutes)
+    {
+        mTimeForTimer = static_cast<seconds_t>(hours * 3600 + minutes * 60);
+    }
+
+    /**
+     * make Timer a functor(make it "collable")
+     * 
+     * @return int 
+     */
     int operator()() const
     {
         timePoint_t timerStartTime{ std::chrono::system_clock::now() };
         timePoint_t timeToStop{ timerStartTime + mTimeForTimer };
         while (timeToStop > std::chrono::system_clock::now())
-        { 
+        {
+            std::this_thread::sleep_for(1s);
         }
 
         return 0;
