@@ -8,17 +8,19 @@
 
 void MainWindow::handleAddTimerButton()
 {
-    TimerSelection *t = new TimerSelection(this);
-    //connect(t, &TimerSelection::accepted, this, &MainWindow::addTimer);
-    if(t->exec())
-    {
-        TimerWidget *newTimer = new TimerWidget(this);
-        newTimer->totalTime = t->getHours() + t->getMinutes();
-        newTimer->setTime(newTimer->totalTime);
-        ui->verticalLayout_2->addWidget(newTimer);
-        newTimer->show();
-    }
-    //Timer *timer;
+    TimerSelection *timerSelection = new TimerSelection(this);
+    connect(timerSelection, &TimerSelection::accepted, this, &MainWindow::addTimer);
+    timerSelection->exec();
+}
+
+void MainWindow::addTimer()
+{
+    TimerSelection *timerSelection = qobject_cast<TimerSelection*>(sender());
+    TimerWidget *timerWidget = new TimerWidget(this);
+    timerWidget->initialize(timerSelection);
+
+    ui->verticalLayout_2->addWidget(timerWidget);
+    timerWidget->show();
 }
 
 MainWindow::MainWindow(QWidget *parent)

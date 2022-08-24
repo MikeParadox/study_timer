@@ -17,7 +17,7 @@ public:
     ~MainWindow();
 
     void handleAddTimerButton();
-    void addTimer(TimerSelection*);
+    void addTimer();
 
 private:
     Ui::MainWindow *ui;

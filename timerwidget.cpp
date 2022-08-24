@@ -1,8 +1,15 @@
 #include "timerwidget.h"
 #include "ui_timerwidget.h"
+#include "timerselection.h"
 
 #include <QTime>
 #include <chrono>
+
+void TimerWidget::initialize(TimerSelection *t)
+{
+    totalTime = t->getHours() + t->getMinutes();
+    setTime(totalTime);
+}
 
 void TimerWidget::setTime(std::chrono::seconds secs)
 {
