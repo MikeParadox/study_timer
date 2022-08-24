@@ -15,11 +15,13 @@ TimerSelection::~TimerSelection()
     delete ui;
 }
 
+// Get the user input in std::chrono::hours
 std::chrono::hours TimerSelection::getHours()
 {
     return std::chrono::hours(ui->hours->value());
 }
 
+// Get the user input in std::chrono::minutes
 std::chrono::minutes TimerSelection::getMinutes()
 {
     return std::chrono::minutes(ui->mins->value());

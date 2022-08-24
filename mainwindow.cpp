@@ -6,20 +6,30 @@
 #include <chrono>
 #include "includes/Timer.h"
 
+// Handle the "Add timer" button, creating a new timer selection dialog
 void MainWindow::handleAddTimerButton()
 {
     TimerSelection *timerSelection = new TimerSelection(this);
+    // Connect the "Accept" button to addTimer
     connect(timerSelection, &TimerSelection::accepted, this, &MainWindow::addTimer);
+    // Show the dialog
     timerSelection->exec();
 }
 
+// Create a new TimerWidget
 void MainWindow::addTimer()
 {
+    // Get the TimerSelection from the sender() QObject
     TimerSelection *timerSelection = qobject_cast<TimerSelection*>(sender());
+
+    // New timerWidget
     TimerWidget *timerWidget = new TimerWidget(this);
+    // Initialize timerWidget
     timerWidget->initialize(timerSelection);
 
+    // Add it to the ScrollArea layout
     ui->verticalLayout_2->addWidget(timerWidget);
+    // Show the widget
     timerWidget->show();
 }
 
