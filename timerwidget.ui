@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Timer</class>
- <widget class="QWidget" name="Timer">
+ <class>TimerWidget</class>
+ <widget class="QWidget" name="TimerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>593</width>
-    <height>294</height>
+    <width>660</width>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">

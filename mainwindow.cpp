@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "timerselection.h"
-#include "timer.h"
+#include "timerwidget.h"
 
 #include <chrono>
+#include "includes/Timer.h"
 
 void MainWindow::handleAddTimerButton()
 {
@@ -11,12 +12,13 @@ void MainWindow::handleAddTimerButton()
     //connect(t, &TimerSelection::accepted, this, &MainWindow::addTimer);
     if(t->exec())
     {
-        Timer *newTimer = new Timer(this);
+        TimerWidget *newTimer = new TimerWidget(this);
         newTimer->totalTime = t->getHours() + t->getMinutes();
         newTimer->setTime(newTimer->totalTime);
         ui->verticalLayout_2->addWidget(newTimer);
         newTimer->show();
     }
+    //Timer *timer;
 }
 
 MainWindow::MainWindow(QWidget *parent)

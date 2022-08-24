@@ -24,9 +24,9 @@ set(PROJECT_SOURCES
         timerselection.cpp
         timerselection.ui
 
-        timer.h
-        timer.cpp
-        timer.ui
+        timerwidget.h
+        timerwidget.cpp
+        timerwidget.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
