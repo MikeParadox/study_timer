@@ -38,6 +38,10 @@ public:
         : mTimeForTimer{ timeForTimerMinutes }
     {}
 
+    explicit Timer(seconds_t timeForTimerSeconds)
+        : mTimeForTimer{ timeForTimerSeconds }
+    {}
+
     seconds_t getTimerTimeInMinutes() const { return mTimeForTimer; }
 
     void setTimeForTimer(int minutes)
@@ -66,10 +70,11 @@ public:
         while (timeToStop > std::chrono::system_clock::now())
         {
             std::this_thread::sleep_for(1s);
+            std::cout << "running\n";
         }
 
         return 0;
     }
 };
 
-#endif
+#endif  // TIMER_H
