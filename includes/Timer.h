@@ -73,8 +73,8 @@ public:
         {
             if (!t->paused)
             {
-            t->totalTime -= 1s;
-            t->setTime(t->totalTime);
+            t->setTotalTime(t->getTotalTime()-1s);
+            t->setTimeLabel(t->getTotalTime());
             std::this_thread::sleep_for(1s);
             }
         }

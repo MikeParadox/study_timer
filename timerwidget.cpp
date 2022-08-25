@@ -10,6 +10,16 @@
 
 #include "includes/Timer.h"
 
+std::chrono::seconds TimerWidget::getTotalTime()
+{
+    return totalTime;
+}
+
+void TimerWidget::setTotalTime(std::chrono::seconds s)
+{
+    totalTime = s;
+}
+
 void TimerWidget::handlePauseButton()
 {
     paused = !paused;
@@ -27,14 +37,14 @@ void TimerWidget::startTimer()
 void TimerWidget::initialize(TimerSelection *t)
 {
     totalTime = t->getHours() + t->getMinutes();
-    setTime(totalTime);
+    setTimeLabel(totalTime);
 
     std::thread myThread(&TimerWidget::startTimer, this);
-    myThread.join();
+    myThread.detach();
 }
 
 // Set the time label to "secs" (std::chrono::seconds)
-void TimerWidget::setTime(std::chrono::seconds secs)
+void TimerWidget::setTimeLabel(std::chrono::seconds secs)
 {
     QTime *time = new QTime(0, 0, 0, 0);
     QString formattedTime = time->addSecs(secs.count()).toString("hh:mm:ss");

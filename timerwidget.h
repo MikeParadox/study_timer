@@ -20,15 +20,17 @@ public:
 
     bool paused;
     Timer *timer;
-    std::chrono::seconds totalTime;
 
     void initialize(TimerSelection *t);
-    void setTime(std::chrono::seconds);
+    void setTimeLabel(std::chrono::seconds);
     void startTimer();
     void handlePauseButton();
+    std::chrono::seconds getTotalTime();
+    void setTotalTime(std::chrono::seconds);
 
 private:
     Ui::TimerWidget *ui;
+    std::chrono::seconds totalTime;
 };
 
 #endif // TIMERWIDGET_H
