@@ -22,6 +22,11 @@ void TimerWidget::setTotalTime(std::chrono::seconds s)
     totalTime = s;
 }
 
+bool TimerWidget::getPauseState()
+{
+    return paused;
+}
+
 void TimerWidget::handlePauseButton()
 {
     paused = !paused;
@@ -34,17 +39,28 @@ void TimerWidget::handleResetButton()
 
 void TimerWidget::handleEditButton()
 {
-    /*
-    ???? new selection dialog
-    totalTime = ??->getHours + ??->getMinutes;
-    */
+    TimerSelection *timerSelection = new TimerSelection(this);
+    // Connect the "Accept" button to addTimer
+    connect(timerSelection, &TimerSelection::accepted, this, &TimerWidget::editTimer);
+    // Show the dialog
+    timerSelection->exec();
 }
 
+
+void TimerWidget::editTimer()
+{
+    // Get the TimerSelection from the sender() QObject
+    TimerSelection *t = qobject_cast<TimerSelection*>(sender());
+
+    totalTime = t->getHours() + t->getMinutes();
+}
+
+// TODO: Fix crash on delete
 void TimerWidget::handleDeleteButton()
 {
     //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
     //w->delTimer(this);
-    //this->deleteLater();
+    //deleteLater();
     totalTime = 0s;
     delete this;
 }
@@ -92,6 +108,7 @@ TimerWidget::TimerWidget(QWidget *parent) :
     paused = false;
     connect(ui->pauseButton, &QPushButton::released, this, &TimerWidget::handlePauseButton);
     connect(ui->resetButton, &QPushButton::released, this, &TimerWidget::handleResetButton);
+    connect(ui->editButton, &QPushButton::released, this, &TimerWidget::handleEditButton);
     connect(ui->deleteButton, &QPushButton::released, this, &TimerWidget::handleDeleteButton);
 }
 

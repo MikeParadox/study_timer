@@ -19,7 +19,6 @@ public:
     explicit TimerWidget(QWidget *parent = nullptr);
     ~TimerWidget();
 
-    bool paused;
     Timer *timer;
 
     void initialize(TimerSelection *t);
@@ -32,11 +31,14 @@ public:
     void handleDeleteButton();
     std::chrono::seconds getTotalTime();
     void setTotalTime(std::chrono::seconds);
+    bool getPauseState();
+    void editTimer();
 
 private:
     Ui::TimerWidget *ui;
     std::chrono::seconds initialTime;
     std::chrono::seconds totalTime;
+    bool paused;
 };
 
 #endif // TIMERWIDGET_H

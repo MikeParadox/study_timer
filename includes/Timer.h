@@ -88,7 +88,7 @@ public:
         // while (tempTimeForTimer > 0s)
         while(t->getTotalTime() > 0s)
         {
-            if (!t->paused)
+            if (!t->getPauseState())
             {
                 t->setTotalTime(t->getTotalTime() - 1s);
                 t->setTimeLabel(t->getTotalTime());
