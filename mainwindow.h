@@ -8,6 +8,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class TimerWidget;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,6 +19,7 @@ public:
 
     void handleAddTimerButton();
     void addTimer();
+    void delTimer(TimerWidget *w);
 
 private:
     Ui::MainWindow *ui;

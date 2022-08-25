@@ -9,6 +9,7 @@ class TimerWidget;
 }
 
 class Timer;
+class MainWindow;
 
 class TimerWidget : public QWidget
 {
@@ -23,13 +24,18 @@ public:
 
     void initialize(TimerSelection *t);
     void setTimeLabel(std::chrono::seconds);
+    void setTimeLabelFinished();
     void startTimer();
     void handlePauseButton();
+    void handleResetButton();
+    void handleEditButton();
+    void handleDeleteButton();
     std::chrono::seconds getTotalTime();
     void setTotalTime(std::chrono::seconds);
 
 private:
     Ui::TimerWidget *ui;
+    std::chrono::seconds initialTime;
     std::chrono::seconds totalTime;
 };
 
