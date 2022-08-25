@@ -23,6 +23,7 @@ public:
 
     void initialize(TimerSelection *t);
     void setTimeLabel(std::chrono::seconds);
+    void setTimeLabelFinished();
     void startTimer();
     void handlePauseButton();
     std::chrono::seconds getTotalTime();

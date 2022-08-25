@@ -75,6 +75,12 @@ public:
             {
             t->setTotalTime(t->getTotalTime()-1s);
             t->setTimeLabel(t->getTotalTime());
+
+            if (t->getTotalTime() == 0s)
+            {
+                t->setTimeLabelFinished();
+            }
+
             std::this_thread::sleep_for(1s);
             }
         }

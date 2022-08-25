@@ -43,6 +43,12 @@ void TimerWidget::initialize(TimerSelection *t)
     myThread.detach();
 }
 
+// Set the time label to Finished
+void TimerWidget::setTimeLabelFinished()
+{
+    ui->time->setText("Finished!");
+}
+
 // Set the time label to "secs" (std::chrono::seconds)
 void TimerWidget::setTimeLabel(std::chrono::seconds secs)
 {
