@@ -1,6 +1,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include "timerwidget.h"
 #include <chrono>
 #include <iostream>
 #include <thread>
@@ -63,17 +64,22 @@ public:
      * 
      * @return int 
      */
-    int operator()() const
+    //int operator()(TimerWidget *t) const
+    int start(TimerWidget *t)
     {
         timePoint_t timerStartTime{ std::chrono::system_clock::now() };
         timePoint_t timeToStop{ timerStartTime + mTimeForTimer };
         while (timeToStop > std::chrono::system_clock::now())
         {
+            if (!t->paused)
+            {
+            t->totalTime -= 1s;
+            t->setTime(t->totalTime);
             std::this_thread::sleep_for(1s);
-            std::cout << "running\n";
+            }
         }
 
-        return 0;
+       return 0;
     }
 };
 
