@@ -7,6 +7,7 @@
 #include <QTime>
 #include <chrono>
 #include <iostream>
+#include <memory>
 
 #include "includes/Timer.h"
 
@@ -27,10 +28,12 @@ void TimerWidget::handlePauseButton()
 
 void TimerWidget::startTimer()
 {
-    Timer *timer = new Timer { totalTime };
+    std::unique_ptr<Timer> timer{new Timer{ totalTime }};
+    // Timer* timer = new Timer{ totalTime };
     //timer(this);
-    timer->start(this);
-    delete timer;
+    // timer->start(this);
+    (*timer)(this);
+    // delete timer;
 }
 
 // Initialize totalTime with the time from the selection dialog

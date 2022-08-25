@@ -12,7 +12,7 @@ using hours_t = std::chrono::hours;
 using timePoint_t = std::chrono::time_point<std::chrono::system_clock>;
 
 /**
- * class to implement timer 
+ * class to implement timer
  * the possibility to initialise a Timer using integral types was
  *  ommited purposely, because providing just an integer would be ambiguous
  *  in relation to time units
@@ -26,7 +26,7 @@ class Timer
 public:
 
     Timer() = default;
-    
+
     explicit Timer(hours_t timeForTimerHours, minutes_t timeForTimerMinutes)
         : mTimeForTimer{ timeForTimerMinutes + timeForTimerHours }
     {}
@@ -61,26 +61,45 @@ public:
 
     /**
      * make Timer a functor(make it "collable")
-     * 
-     * @return int 
+     *
+     * @return int
      */
-    //int operator()(TimerWidget *t) const
-    int start(TimerWidget *t)
+     //int operator()(TimerWidget *t) const
+     // int start(TimerWidget *t)
+     // {
+     //     timePoint_t timerStartTime{ std::chrono::system_clock::now() };
+     //     timePoint_t timeToStop{ timerStartTime + mTimeForTimer };
+     //     while (timeToStop > std::chrono::system_clock::now())
+     //     {
+     //         if (!t->paused)
+     //         {
+     //         t->setTotalTime(t->getTotalTime()-1s);
+     //         t->setTimeLabel(t->getTotalTime());
+     //         std::this_thread::sleep_for(1s);
+     //         }
+     //     }
+
+     //    return 0;
+     // }
+
+    int operator()(TimerWidget* t) const
     {
-        timePoint_t timerStartTime{ std::chrono::system_clock::now() };
-        timePoint_t timeToStop{ timerStartTime + mTimeForTimer };
-        while (timeToStop > std::chrono::system_clock::now())
+        // auto tempTimeForTimer{ mTimeForTimer };
+        // while (tempTimeForTimer > 0s)
+        while(t->getTotalTime() > 0s)
         {
             if (!t->paused)
             {
-            t->setTotalTime(t->getTotalTime()-1s);
-            t->setTimeLabel(t->getTotalTime());
-            std::this_thread::sleep_for(1s);
+                t->setTotalTime(t->getTotalTime() - 1s);
+                t->setTimeLabel(t->getTotalTime());
+                // tempTimeForTimer -= 1s;
+                std::this_thread::sleep_for(1s);
             }
         }
 
-       return 0;
+        return 0; // TODO implement status code control
     }
+
 };
 
 #endif  // TIMER_H
