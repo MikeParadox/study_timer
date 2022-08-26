@@ -10,7 +10,7 @@
 #include <iostream>
 #include <memory>
 
-#include "includes/Timer.h"
+#include "Timer.h"
 
 std::chrono::seconds TimerWidget::getTotalTime()
 {
