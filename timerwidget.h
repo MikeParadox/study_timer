@@ -8,9 +8,6 @@ namespace Ui {
 class TimerWidget;
 }
 
-class Timer;
-class MainWindow;
-
 class TimerWidget : public QWidget
 {
     Q_OBJECT
@@ -31,6 +28,7 @@ public:
 
 private:
     Ui::TimerWidget *ui;
+
     std::chrono::seconds initialTime;
     std::chrono::seconds totalTime;
     bool paused;
