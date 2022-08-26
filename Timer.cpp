@@ -27,7 +27,7 @@ int Timer::operator()(TimerWidget* t) const
 {
     while (t->getTotalTime() > 0s)
     {
-        if (!t->paused)
+        if (!t->getPauseState())
         {
             t->setTotalTime(t->getTotalTime() - 1s);
             t->setTimeLabel(t->getTotalTime());
