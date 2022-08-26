@@ -19,7 +19,7 @@ public:
 
     void handleAddTimerButton();
     void addTimer();
-    void delTimer(TimerWidget *w);
+    //void delTimer(TimerWidget *w);
 
 private:
     Ui::MainWindow *ui;

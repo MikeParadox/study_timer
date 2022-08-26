@@ -47,9 +47,8 @@ void TimerWidget::handleDeleteButton()
 {
     //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
     //w->delTimer(this);
-    //deleteLater();
+
     toBeDeleted = true;
-    delete this;
 }
 
 int TimerWidget::timerLoop()
@@ -58,6 +57,7 @@ int TimerWidget::timerLoop()
     {
         if (toBeDeleted)
         {
+            delete this;
             return 0;
         }
         if (totalTime == 0s)

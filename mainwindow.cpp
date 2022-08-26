@@ -35,10 +35,12 @@ void MainWindow::addTimer()
     timerWidget->show();
 }
 
+/*
 void MainWindow::delTimer(TimerWidget *t)
 {
     ui->verticalLayout_2->removeWidget(t);
 }
+*/
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
