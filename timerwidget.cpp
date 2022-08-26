@@ -10,26 +10,9 @@
 #include <iostream>
 #include <memory>
 
-#include "Timer.h"
 
-bool TimerWidget::getDeleted()
-{
-    return toBeDeleted;
-}
-std::chrono::seconds TimerWidget::getTotalTime()
-{
-    return totalTime;
-}
+using namespace std::literals; // for using literals like 10s
 
-void TimerWidget::setTotalTime(std::chrono::seconds s)
-{
-    totalTime = s;
-}
-
-bool TimerWidget::getPauseState()
-{
-    return paused;
-}
 
 void TimerWidget::handlePauseButton()
 {
@@ -69,14 +52,28 @@ void TimerWidget::handleDeleteButton()
     delete this;
 }
 
-void TimerWidget::startTimer()
+int TimerWidget::timerLoop()
 {
-    std::unique_ptr<Timer> timer{new Timer{ totalTime }};
-    // Timer* timer = new Timer{ totalTime };
-    //timer(this);
-    // timer->start(this);
-    (*timer)(this);
-    // delete timer;
+    while (totalTime >= 0s)
+    {
+        if (toBeDeleted)
+        {
+            return 0;
+        }
+        if (totalTime == 0s)
+        {
+            finished();
+            return 0;
+        }
+        if (!paused)
+        {
+            totalTime -= 1s;
+            setTimeLabel(totalTime);
+            std::this_thread::sleep_for(1s);
+        }
+    }
+
+    return 0; // TODO implement status code control
 }
 
 // Initialize totalTime with the time from the selection dialog
@@ -86,7 +83,7 @@ void TimerWidget::initialize(TimerSelection *t)
     totalTime = initialTime;
     setTimeLabel(totalTime);
 
-    std::thread d(&TimerWidget::startTimer, this);
+    std::thread d(&TimerWidget::timerLoop, this);
     d.detach();
 }
 

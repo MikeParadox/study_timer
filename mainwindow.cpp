@@ -5,7 +5,6 @@
 #include <memory>
 
 #include <chrono>
-#include "Timer.h"
 
 // Handle the "Add timer" button, creating a new timer selection dialog
 void MainWindow::handleAddTimerButton()

@@ -22,16 +22,12 @@ public:
     void initialize(TimerSelection *t);
     void setTimeLabel(std::chrono::seconds);
     void finished();
-    void startTimer();
+    int timerLoop();
     void handlePauseButton();
     void handleResetButton();
     void handleEditButton();
     void handleDeleteButton();
-    std::chrono::seconds getTotalTime();
-    void setTotalTime(std::chrono::seconds);
-    bool getPauseState();
     void editTimer();
-    bool getDeleted();
 
 private:
     Ui::TimerWidget *ui;

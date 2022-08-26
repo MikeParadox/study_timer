@@ -11,53 +11,88 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Study Scheduler</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QPushButton" name="addTimerButton">
-      <property name="text">
-       <string>Add new timer</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>1022</width>
-         <height>529</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2"/>
-      </widget>
-     </widget>
-    </item>
     <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <pointsize>23</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="text">
-       <string>Timers</string>
-      </property>
+      <widget class="QWidget" name="timerTab">
+       <attribute name="title">
+        <string>Timers</string>
+       </attribute>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>509</width>
+          <height>38</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>23</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Timers</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addTimerButton">
+        <property name="geometry">
+         <rect>
+          <x>515</x>
+          <y>5</y>
+          <width>509</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add new timer</string>
+        </property>
+       </widget>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>44</y>
+          <width>1024</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1022</width>
+           <height>529</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2"/>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="somethingElseTab">
+       <attribute name="title">
+        <string>Something Else</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>

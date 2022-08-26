@@ -28,9 +28,6 @@ set(PROJECT_SOURCES
         timerwidget.cpp
         timerwidget.ui
 
-        Timer.h
-        Timer.cpp
-
         resources.qrc
 )
 
