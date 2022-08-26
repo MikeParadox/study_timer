@@ -28,7 +28,8 @@ set(PROJECT_SOURCES
         timerwidget.cpp
         timerwidget.ui
 
-        includes/Timer.h
+        Timer.h
+        Timer.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
