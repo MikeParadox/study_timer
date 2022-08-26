@@ -25,8 +25,17 @@ void Timer::changeExistingTimer(int hours, int minutes)
 
 int Timer::operator()(TimerWidget* t) const
 {
-    while (t->getTotalTime() > 0s)
+    while (t->getTotalTime() >= 0s)
     {
+        if (t->getDeleted())
+        {
+            return 0;
+        }
+        if (t->getTotalTime() == 0s)
+        {
+            t->finished();
+            return 0;
+        }
         if (!t->getPauseState())
         {
             t->setTotalTime(t->getTotalTime() - 1s);

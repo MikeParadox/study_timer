@@ -3,7 +3,7 @@
 #include "ui_timerwidget.h"
 #include "timerselection.h"
 
-#include <QThread>
+#include <QSoundEffect>
 #include <thread>
 #include <QTime>
 #include <chrono>
@@ -12,6 +12,10 @@
 
 #include "Timer.h"
 
+bool TimerWidget::getDeleted()
+{
+    return toBeDeleted;
+}
 std::chrono::seconds TimerWidget::getTotalTime()
 {
     return totalTime;
@@ -61,7 +65,7 @@ void TimerWidget::handleDeleteButton()
     //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
     //w->delTimer(this);
     //deleteLater();
-    totalTime = 0s;
+    toBeDeleted = true;
     delete this;
 }
 
@@ -82,14 +86,21 @@ void TimerWidget::initialize(TimerSelection *t)
     totalTime = initialTime;
     setTimeLabel(totalTime);
 
-    std::thread myThread(&TimerWidget::startTimer, this);
-    myThread.detach();
+    std::thread d(&TimerWidget::startTimer, this);
+    d.detach();
 }
 
 // Set the time label to Finished
-void TimerWidget::setTimeLabelFinished()
+void TimerWidget::finished()
 {
     ui->time->setText("Finished!");
+    QSoundEffect effect;
+    effect.setSource(QUrl("qrc:/sounds/alarm.wav"));
+    effect.setVolume(0.25f);
+    effect.play();
+
+    QEventLoop loop;
+    loop.exec();
 }
 
 // Set the time label to "secs" (std::chrono::seconds)
@@ -106,6 +117,7 @@ TimerWidget::TimerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     paused = false;
+    toBeDeleted = false;
     connect(ui->pauseButton, &QPushButton::released, this, &TimerWidget::handlePauseButton);
     connect(ui->resetButton, &QPushButton::released, this, &TimerWidget::handleResetButton);
     connect(ui->editButton, &QPushButton::released, this, &TimerWidget::handleEditButton);

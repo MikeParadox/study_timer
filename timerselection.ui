@@ -30,10 +30,18 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="mins"/>
+      <widget class="QSpinBox" name="mins">
+       <property name="maximum">
+        <number>60</number>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QSpinBox" name="hours"/>
+      <widget class="QSpinBox" name="hours">
+       <property name="maximum">
+        <number>24</number>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label">

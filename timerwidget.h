@@ -2,6 +2,7 @@
 #define TIMERWIDGET_H
 
 #include <QWidget>
+#include <QSoundEffect>
 #include "timerselection.h"
 
 namespace Ui {
@@ -19,11 +20,9 @@ public:
     explicit TimerWidget(QWidget *parent = nullptr);
     ~TimerWidget();
 
-    Timer *timer;
-
     void initialize(TimerSelection *t);
     void setTimeLabel(std::chrono::seconds);
-    void setTimeLabelFinished();
+    void finished();
     void startTimer();
     void handlePauseButton();
     void handleResetButton();
@@ -33,12 +32,14 @@ public:
     void setTotalTime(std::chrono::seconds);
     bool getPauseState();
     void editTimer();
+    bool getDeleted();
 
 private:
     Ui::TimerWidget *ui;
     std::chrono::seconds initialTime;
     std::chrono::seconds totalTime;
     bool paused;
+    bool toBeDeleted;
 };
 
 #endif // TIMERWIDGET_H
