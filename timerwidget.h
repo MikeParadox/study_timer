@@ -2,7 +2,6 @@
 #define TIMERWIDGET_H
 
 #include <QWidget>
-#include <QSoundEffect>
 #include "timerselection.h"
 
 namespace Ui {
