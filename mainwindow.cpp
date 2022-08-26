@@ -2,14 +2,15 @@
 #include "./ui_mainwindow.h"
 #include "timerselection.h"
 #include "timerwidget.h"
+#include <memory>
 
 #include <chrono>
-#include "includes/Timer.h"
+#include "Timer.h"
 
 // Handle the "Add timer" button, creating a new timer selection dialog
 void MainWindow::handleAddTimerButton()
 {
-    TimerSelection *timerSelection = new TimerSelection(this);
+    TimerSelection* timerSelection = new TimerSelection(this);
     // Connect the "Accept" button to addTimer
     connect(timerSelection, &TimerSelection::accepted, this, &MainWindow::addTimer);
     // Show the dialog
@@ -21,6 +22,8 @@ void MainWindow::addTimer()
 {
     // Get the TimerSelection from the sender() QObject
     TimerSelection *timerSelection = qobject_cast<TimerSelection*>(sender());
+
+    // std::unique_ptr
 
     // New timerWidget
     TimerWidget *timerWidget = new TimerWidget(this);
