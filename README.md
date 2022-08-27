@@ -1,1 +1,1 @@
-# Study Timer
+# Study Scheduler

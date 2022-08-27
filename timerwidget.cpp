@@ -48,7 +48,12 @@ void TimerWidget::handleDeleteButton()
     //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
     //w->delTimer(this);
 
-    toBeDeleted = true;
+    if (isFinished)
+    {
+        delete this;
+    } else {
+        toBeDeleted = true;
+    }
 }
 
 int TimerWidget::timerLoop()
@@ -90,6 +95,7 @@ void TimerWidget::initialize(TimerSelection *t)
 // Set the time label to Finished
 void TimerWidget::finished()
 {
+    isFinished = true;
     ui->time->setText("Finished!");
     QSoundEffect effect;
     effect.setSource(QUrl("qrc:/sounds/alarm.wav"));
@@ -115,6 +121,7 @@ TimerWidget::TimerWidget(QWidget *parent) :
     ui->setupUi(this);
     paused = false;
     toBeDeleted = false;
+    isFinished = false;
     connect(ui->pauseButton, &QPushButton::released, this, &TimerWidget::handlePauseButton);
     connect(ui->resetButton, &QPushButton::released, this, &TimerWidget::handleResetButton);
     connect(ui->editButton, &QPushButton::released, this, &TimerWidget::handleEditButton);

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Timer-Qt VERSION 0.1 LANGUAGES CXX)
+project(Study-Scheduler VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -28,35 +28,35 @@ set(PROJECT_SOURCES
         timerwidget.cpp
         timerwidget.ui
 
-        resources.qrc
+        data/resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Timer-Qt
+    qt_add_executable(Study-Scheduler
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Timer-Qt APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET Study-Scheduler APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(Timer-Qt SHARED
+        add_library(Study-Scheduler SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(Timer-Qt
+        add_executable(Study-Scheduler
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(Timer-Qt PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
+target_link_libraries(Study-Scheduler PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
 
-set_target_properties(Timer-Qt PROPERTIES
+set_target_properties(Study-Scheduler PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -65,5 +65,5 @@ set_target_properties(Timer-Qt PROPERTIES
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Timer-Qt)
+    qt_finalize_executable(Study-Scheduler)
 endif()

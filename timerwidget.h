@@ -33,6 +33,7 @@ private:
     std::chrono::seconds totalTime;
     bool paused;
     bool toBeDeleted;
+    bool isFinished;
 };
 
 #endif // TIMERWIDGET_H
