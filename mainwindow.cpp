@@ -30,7 +30,6 @@ void MainWindow::addTimer()
     timerWidget->initialize(timerSelection);
 
     // Add it to the ScrollArea layout
-    ui->verticalLayout_2->setAlignment(Qt::AlignTop);
     ui->verticalLayout_2->addWidget(timerWidget);
     // Show the widget
     timerWidget->show();
@@ -48,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->verticalLayout_2->setAlignment(Qt::AlignTop);
     connect(ui->addTimerButton, &QPushButton::released, this, &MainWindow::handleAddTimerButton);
 }
 
