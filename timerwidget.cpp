@@ -37,11 +37,13 @@ void TimerWidget::handleResetButton()
 
 void TimerWidget::handleEditButton()
 {
-    TimerSelection *timerSelection = new TimerSelection(this);
+    TimerSelection *t= new TimerSelection(this);
+    t->setTime(totalTime);
+    t->setTimerName(timerName);
     // Connect the "Accept" button to addTimer
-    connect(timerSelection, &TimerSelection::accepted, this, &TimerWidget::editTimer);
+    connect(t, &TimerSelection::accepted, this, &TimerWidget::editTimer);
     // Show the dialog
-    timerSelection->exec();
+    t->exec();
 }
 
 // TODO: Fix crash on delete
@@ -67,7 +69,8 @@ void TimerWidget::editTimer()
 
     initialTime = totalTime;
 
-    ui->timerNameFieldOnTimer->setText(t->getTimerName());
+    timerName = t->getTimerName();
+    ui->timerNameFieldOnTimer->setText(timerName);
 }
 
 
@@ -102,7 +105,8 @@ void TimerWidget::initialize(TimerSelection *t)
     initialTime = t->getHours() + t->getMinutes();
     totalTime = initialTime;
     setTimeLabel(totalTime);
-    ui->timerNameFieldOnTimer->setText(t->getTimerName());
+    timerName = t->getTimerName();
+    ui->timerNameFieldOnTimer->setText(timerName);
 
 }
 

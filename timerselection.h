@@ -18,6 +18,8 @@ public:
     std::chrono::hours getHours();
     std::chrono::minutes getMinutes();
     QString getTimerName();
+    void setTime(std::chrono::seconds);
+    void setTimerName(QString);
 
 private:
     Ui::TimerSelection *ui;

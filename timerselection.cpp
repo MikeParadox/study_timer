@@ -31,3 +31,18 @@ std::chrono::minutes TimerSelection::getMinutes()
 {
     return std::chrono::minutes(ui->mins->value());
 }
+
+
+void TimerSelection::setTime(std::chrono::seconds s)
+{
+    int seconds = s.count();
+    int hours = seconds / 60 / 60;
+    int minutes = seconds / 60 - hours * 60;
+    ui->hours->setValue(hours);
+    ui->mins->setValue(minutes);
+}
+
+void TimerSelection::setTimerName(QString n)
+{
+    ui->timerNameSelection->setText(n);
+}
