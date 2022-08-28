@@ -14,6 +14,13 @@
 using namespace std::literals; // for using literals like 10s
 
 
+void TimerWidget::handleStartButton()
+{
+    ui->startButton->setEnabled(false);
+    std::thread d(&TimerWidget::timerLoop, this);
+    d.detach();
+}
+
 void TimerWidget::handlePauseButton()
 {
     paused = !paused;
@@ -22,6 +29,10 @@ void TimerWidget::handlePauseButton()
 void TimerWidget::handleResetButton()
 {
     totalTime = initialTime;
+    setTimeLabel(totalTime);
+    ui->startButton->setEnabled(true);
+    ui->pauseButton->setEnabled(true);
+    ui->editButton->setEnabled(true);
 }
 
 void TimerWidget::handleEditButton()
@@ -31,18 +42,6 @@ void TimerWidget::handleEditButton()
     connect(timerSelection, &TimerSelection::accepted, this, &TimerWidget::editTimer);
     // Show the dialog
     timerSelection->exec();
-}
-
-
-void TimerWidget::editTimer()
-{
-    // Get the TimerSelection from the sender() QObject
-    TimerSelection *t = qobject_cast<TimerSelection*>(sender());
-
-    totalTime = t->getHours() + t->getMinutes();
-
-    initialTime = totalTime;
-
 }
 
 // TODO: Fix crash on delete
@@ -58,6 +57,18 @@ void TimerWidget::handleDeleteButton()
         toBeDeleted = true;
     }
 }
+
+void TimerWidget::editTimer()
+{
+    // Get the TimerSelection from the sender() QObject
+    TimerSelection *t = qobject_cast<TimerSelection*>(sender());
+
+    totalTime = t->getHours() + t->getMinutes();
+
+    initialTime = totalTime;
+
+}
+
 
 int TimerWidget::timerLoop()
 {
@@ -91,16 +102,16 @@ void TimerWidget::initialize(TimerSelection *t)
     totalTime = initialTime;
     setTimeLabel(totalTime);
     ui->timerNameFieldOnTimer->setText(t->getTimerName());
-    ui->timerNameFieldOnTimer->setReadOnly(true);
 
-    std::thread d(&TimerWidget::timerLoop, this);
-    d.detach();
 }
+
 
 // Set the time label to Finished
 void TimerWidget::finished()
 {
     isFinished = true;
+    ui->pauseButton->setEnabled(false);
+    ui->editButton->setEnabled(false);
     ui->time->setText("Finished!");
     QSoundEffect effect;
     effect.setSource(QUrl("qrc:/sounds/alarm.wav"));
@@ -128,6 +139,7 @@ TimerWidget::TimerWidget(QWidget *parent) :
     paused = false;
     toBeDeleted = false;
     isFinished = false;
+    connect(ui->startButton, &QPushButton::released, this, &TimerWidget::handleStartButton);
     connect(ui->pauseButton, &QPushButton::released, this, &TimerWidget::handlePauseButton);
     connect(ui->resetButton, &QPushButton::released, this, &TimerWidget::handleResetButton);
     connect(ui->editButton, &QPushButton::released, this, &TimerWidget::handleEditButton);

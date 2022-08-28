@@ -21,6 +21,7 @@ public:
     void setTimeLabel(std::chrono::seconds);
     void finished();
     int timerLoop();
+    void handleStartButton();
     void handlePauseButton();
     void handleResetButton();
     void handleEditButton();

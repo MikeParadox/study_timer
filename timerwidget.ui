@@ -30,22 +30,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLineEdit" name="timerNameFieldOnTimer">
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-     <property name="placeholderText">
-      <string>TimerName</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -53,8 +37,8 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0" rowspan="2">
        <widget class="QLabel" name="time">
         <property name="font">
          <font>
@@ -68,31 +52,45 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="2" rowspan="3">
        <widget class="QPushButton" name="pauseButton">
         <property name="text">
-         <string>Pause (Toggle)</string>
+         <string>Pause</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="timerNameFieldOnTimer">
+        <property name="text">
+         <string>Timer Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4" rowspan="3">
        <widget class="QPushButton" name="resetButton">
         <property name="text">
          <string>Reset</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="5" rowspan="3">
        <widget class="QPushButton" name="editButton">
         <property name="text">
          <string>Edit</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="6" rowspan="3">
        <widget class="QPushButton" name="deleteButton">
         <property name="text">
          <string>Delete</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" rowspan="3">
+       <widget class="QPushButton" name="startButton">
+        <property name="text">
+         <string>Start</string>
         </property>
        </widget>
       </item>
