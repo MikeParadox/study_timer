@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "timerselection.h"
+#include <string>
 
 namespace Ui {
 class TimerWidget;
@@ -25,12 +26,14 @@ public:
     void handleEditButton();
     void handleDeleteButton();
     void editTimer();
+    void printName();
 
 private:
     Ui::TimerWidget *ui;
 
     std::chrono::seconds initialTime;
     std::chrono::seconds totalTime;
+    const QString timerName{ "timer" };
     bool paused;
     bool toBeDeleted;
     bool isFinished;

@@ -40,6 +40,9 @@ void TimerWidget::editTimer()
     TimerSelection *t = qobject_cast<TimerSelection*>(sender());
 
     totalTime = t->getHours() + t->getMinutes();
+
+    initialTime = totalTime;
+
 }
 
 // TODO: Fix crash on delete
@@ -87,6 +90,8 @@ void TimerWidget::initialize(TimerSelection *t)
     initialTime = t->getHours() + t->getMinutes();
     totalTime = initialTime;
     setTimeLabel(totalTime);
+    ui->timerNameFieldOnTimer->setText(t->getTimerName());
+    ui->timerNameFieldOnTimer->setReadOnly(true);
 
     std::thread d(&TimerWidget::timerLoop, this);
     d.detach();
@@ -105,6 +110,7 @@ void TimerWidget::finished()
     QEventLoop loop;
     loop.exec();
 }
+
 
 // Set the time label to "secs" (std::chrono::seconds)
 void TimerWidget::setTimeLabel(std::chrono::seconds secs)

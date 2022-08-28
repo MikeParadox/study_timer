@@ -21,6 +21,11 @@ std::chrono::hours TimerSelection::getHours()
     return std::chrono::hours(ui->hours->value());
 }
 
+QString TimerSelection::getTimerName()
+{
+    return QString(ui->timerNameSelection->text());
+}
+
 // Get the user input in std::chrono::minutes
 std::chrono::minutes TimerSelection::getMinutes()
 {
