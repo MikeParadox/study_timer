@@ -67,6 +67,7 @@ void TimerWidget::editTimer()
 
     initialTime = totalTime;
 
+    ui->timerNameFieldOnTimer->setText(t->getTimerName());
 }
 
 
