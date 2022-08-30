@@ -12,9 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -25,14 +24,15 @@ class Ui_TimerWidget
 {
 public:
     QVBoxLayout *verticalLayout;
-    QLineEdit *timerNameFieldOnTimer;
     QFrame *frame;
-    QHBoxLayout *horizontalLayout_2;
+    QGridLayout *gridLayout;
     QLabel *time;
     QPushButton *pauseButton;
+    QLabel *timerNameFieldOnTimer;
     QPushButton *resetButton;
     QPushButton *editButton;
     QPushButton *deleteButton;
+    QPushButton *startButton;
 
     void setupUi(QWidget *TimerWidget)
     {
@@ -48,19 +48,12 @@ public:
         TimerWidget->setLayoutDirection(Qt::LeftToRight);
         verticalLayout = new QVBoxLayout(TimerWidget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        timerNameFieldOnTimer = new QLineEdit(TimerWidget);
-        timerNameFieldOnTimer->setObjectName(QString::fromUtf8("timerNameFieldOnTimer"));
-        timerNameFieldOnTimer->setAutoFillBackground(true);
-        timerNameFieldOnTimer->setReadOnly(true);
-
-        verticalLayout->addWidget(timerNameFieldOnTimer);
-
         frame = new QFrame(TimerWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        horizontalLayout_2 = new QHBoxLayout(frame);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        gridLayout = new QGridLayout(frame);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         time = new QLabel(frame);
         time->setObjectName(QString::fromUtf8("time"));
         QFont font;
@@ -68,27 +61,37 @@ public:
         font.setBold(true);
         time->setFont(font);
 
-        horizontalLayout_2->addWidget(time);
+        gridLayout->addWidget(time, 1, 0, 2, 1);
 
         pauseButton = new QPushButton(frame);
         pauseButton->setObjectName(QString::fromUtf8("pauseButton"));
 
-        horizontalLayout_2->addWidget(pauseButton);
+        gridLayout->addWidget(pauseButton, 0, 2, 3, 1);
+
+        timerNameFieldOnTimer = new QLabel(frame);
+        timerNameFieldOnTimer->setObjectName(QString::fromUtf8("timerNameFieldOnTimer"));
+
+        gridLayout->addWidget(timerNameFieldOnTimer, 0, 0, 1, 1);
 
         resetButton = new QPushButton(frame);
         resetButton->setObjectName(QString::fromUtf8("resetButton"));
 
-        horizontalLayout_2->addWidget(resetButton);
+        gridLayout->addWidget(resetButton, 0, 4, 3, 1);
 
         editButton = new QPushButton(frame);
         editButton->setObjectName(QString::fromUtf8("editButton"));
 
-        horizontalLayout_2->addWidget(editButton);
+        gridLayout->addWidget(editButton, 0, 5, 3, 1);
 
         deleteButton = new QPushButton(frame);
         deleteButton->setObjectName(QString::fromUtf8("deleteButton"));
 
-        horizontalLayout_2->addWidget(deleteButton);
+        gridLayout->addWidget(deleteButton, 0, 6, 3, 1);
+
+        startButton = new QPushButton(frame);
+        startButton->setObjectName(QString::fromUtf8("startButton"));
+
+        gridLayout->addWidget(startButton, 0, 1, 3, 1);
 
 
         verticalLayout->addWidget(frame);
@@ -102,13 +105,13 @@ public:
     void retranslateUi(QWidget *TimerWidget)
     {
         TimerWidget->setWindowTitle(QCoreApplication::translate("TimerWidget", "Form", nullptr));
-        timerNameFieldOnTimer->setText(QString());
-        timerNameFieldOnTimer->setPlaceholderText(QCoreApplication::translate("TimerWidget", "TimerName", nullptr));
         time->setText(QCoreApplication::translate("TimerWidget", "Set Time", nullptr));
-        pauseButton->setText(QCoreApplication::translate("TimerWidget", "Pause (Toggle)", nullptr));
+        pauseButton->setText(QCoreApplication::translate("TimerWidget", "Pause", nullptr));
+        timerNameFieldOnTimer->setText(QCoreApplication::translate("TimerWidget", "Timer Name", nullptr));
         resetButton->setText(QCoreApplication::translate("TimerWidget", "Reset", nullptr));
         editButton->setText(QCoreApplication::translate("TimerWidget", "Edit", nullptr));
         deleteButton->setText(QCoreApplication::translate("TimerWidget", "Delete", nullptr));
+        startButton->setText(QCoreApplication::translate("TimerWidget", "Start", nullptr));
     } // retranslateUi
 
 };

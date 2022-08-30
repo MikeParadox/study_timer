@@ -38,6 +38,7 @@ private:
     QString timerName;
     bool paused;
     bool toBeDeleted;
+    bool isStarted;
     bool isFinished;
 };
 

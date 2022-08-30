@@ -16,14 +16,30 @@ using namespace std::literals; // for using literals like 10s
 
 void TimerWidget::handleStartButton()
 {
-    ui->startButton->setEnabled(false);
-    std::thread d(&TimerWidget::timerLoop, this);
-    d.detach();
+    if (paused == false)
+    {
+        ui->startButton->setEnabled(false);
+        isStarted = true;
+        std::thread d(&TimerWidget::timerLoop, this);
+        d.detach();
+    }
+    else
+    {
+        paused = false;
+        ui->pauseButton->setEnabled(true);
+        ui->startButton->setDisabled(true);
+
+    }
 }
 
 void TimerWidget::handlePauseButton()
 {
-    paused = !paused;
+    if (!paused)
+    {
+        paused = true;
+        ui->startButton->setEnabled(true);
+        ui->pauseButton->setDisabled(true);
+    }
 }
 
 void TimerWidget::handleResetButton()
@@ -31,13 +47,16 @@ void TimerWidget::handleResetButton()
     totalTime = initialTime;
     setTimeLabel(totalTime);
     ui->startButton->setEnabled(true);
-    ui->pauseButton->setEnabled(true);
+    ui->pauseButton->setDisabled(true);
     ui->editButton->setEnabled(true);
+    paused = true;
 }
 
 void TimerWidget::handleEditButton()
 {
-    TimerSelection *t= new TimerSelection(this);
+    // The problem in deleting timer after editing it is that it's another
+    //  timer
+    TimerSelection* t = new TimerSelection(this);
     t->setTime(totalTime);
     t->setTimerName(timerName);
     // Connect the "Accept" button to addTimer
@@ -52,10 +71,12 @@ void TimerWidget::handleDeleteButton()
     //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
     //w->delTimer(this);
 
-    if (isFinished)
+    if (!isStarted)
     {
         delete this;
-    } else {
+    }
+    else
+    {
         toBeDeleted = true;
     }
 }
@@ -76,18 +97,13 @@ void TimerWidget::editTimer()
 
 int TimerWidget::timerLoop()
 {
-    while (totalTime >= 0s)
+    while (totalTime > 0s && !toBeDeleted)
     {
-        if (toBeDeleted)
-        {
-            delete this;
-            return 0;
-        }
-        if (totalTime == 0s)
-        {
-            finished();
-            return 0;
-        }
+        // if (totalTime == 0s)
+        // {
+        //     finished();
+        //     return 0;
+        // }
         if (!paused)
         {
             totalTime -= 1s;
@@ -95,7 +111,12 @@ int TimerWidget::timerLoop()
             std::this_thread::sleep_for(1s);
         }
     }
-
+    // When timer is done it shouldn't be deleted
+    if (toBeDeleted)
+    {
+        delete this;
+    }
+    
     return 0; // TODO implement status code control
 }
 
@@ -107,6 +128,7 @@ void TimerWidget::initialize(TimerSelection *t)
     setTimeLabel(totalTime);
     timerName = t->getTimerName();
     ui->timerNameFieldOnTimer->setText(timerName);
+    ui->pauseButton->setEnabled(true);
 
 }
 
@@ -114,7 +136,7 @@ void TimerWidget::initialize(TimerSelection *t)
 // Set the time label to Finished
 void TimerWidget::finished()
 {
-    isFinished = true;
+    isStarted = false;
     ui->pauseButton->setEnabled(false);
     ui->editButton->setEnabled(false);
     ui->time->setText("Finished!");
@@ -143,7 +165,7 @@ TimerWidget::TimerWidget(QWidget *parent) :
     ui->setupUi(this);
     paused = false;
     toBeDeleted = false;
-    isFinished = false;
+    isStarted = false;
     connect(ui->startButton, &QPushButton::released, this, &TimerWidget::handleStartButton);
     connect(ui->pauseButton, &QPushButton::released, this, &TimerWidget::handlePauseButton);
     connect(ui->resetButton, &QPushButton::released, this, &TimerWidget::handleResetButton);
