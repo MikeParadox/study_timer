@@ -10,15 +10,15 @@
 #include <iostream>
 #include <memory>
 
-
 using namespace std::literals; // for using literals like 10s
-
 
 void TimerWidget::handleStartButton()
 {
     if (paused == false)
     {
         ui->startButton->setEnabled(false);
+        ui->pauseButton->setEnabled(true);
+        ui->resetButton->setEnabled(true);
         isStarted = true;
         std::thread d(&TimerWidget::timerLoop, this);
         d.detach();
@@ -27,8 +27,8 @@ void TimerWidget::handleStartButton()
     {
         paused = false;
         ui->pauseButton->setEnabled(true);
+        ui->resetButton->setEnabled(true);
         ui->startButton->setDisabled(true);
-
     }
 }
 
@@ -48,6 +48,7 @@ void TimerWidget::handleResetButton()
     setTimeLabel(totalTime);
     ui->startButton->setEnabled(true);
     ui->pauseButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
     ui->editButton->setEnabled(true);
     paused = true;
 }
@@ -56,20 +57,21 @@ void TimerWidget::handleEditButton()
 {
     // The problem in deleting timer after editing it is that it's another
     //  timer
-    TimerSelection* t = new TimerSelection(this);
-    t->setTime(totalTime);
+    TimerSelection *t = new TimerSelection(this);
+    t->setTime(initialTime); // in my VS Code it's line 61
     t->setTimerName(timerName);
     // Connect the "Accept" button to addTimer
     connect(t, &TimerSelection::accepted, this, &TimerWidget::editTimer);
     // Show the dialog
     t->exec();
+    setTimeLabel(totalTime);
 }
 
 // TODO: Fix crash on delete
 void TimerWidget::handleDeleteButton()
 {
-    //MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
-    //w->delTimer(this);
+    // MainWindow *w = qobject_cast<MainWindow*>(this->topLevelWidget());
+    // w->delTimer(this);
 
     if (!isStarted)
     {
@@ -84,7 +86,7 @@ void TimerWidget::handleDeleteButton()
 void TimerWidget::editTimer()
 {
     // Get the TimerSelection from the sender() QObject
-    TimerSelection *t = qobject_cast<TimerSelection*>(sender());
+    TimerSelection *t = qobject_cast<TimerSelection *>(sender());
 
     totalTime = t->getHours() + t->getMinutes();
 
@@ -92,8 +94,11 @@ void TimerWidget::editTimer()
 
     timerName = t->getTimerName();
     ui->timerNameFieldOnTimer->setText(timerName);
+    paused = true;
+    ui->pauseButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
+    ui->startButton->setEnabled(true);
 }
-
 
 int TimerWidget::timerLoop()
 {
@@ -116,7 +121,7 @@ int TimerWidget::timerLoop()
     {
         delete this;
     }
-    
+
     return 0; // TODO implement status code control
 }
 
@@ -128,16 +133,16 @@ void TimerWidget::initialize(TimerSelection *t)
     setTimeLabel(totalTime);
     timerName = t->getTimerName();
     ui->timerNameFieldOnTimer->setText(timerName);
-    ui->pauseButton->setEnabled(true);
-
+    ui->pauseButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
 }
-
 
 // Set the time label to Finished
 void TimerWidget::finished()
 {
     isStarted = false;
     ui->pauseButton->setEnabled(false);
+    ui->resetButton->setEnabled(false);
     ui->editButton->setEnabled(false);
     ui->time->setText("Finished!");
     QSoundEffect effect;
@@ -149,7 +154,6 @@ void TimerWidget::finished()
     loop.exec();
 }
 
-
 // Set the time label to "secs" (std::chrono::seconds)
 void TimerWidget::setTimeLabel(std::chrono::seconds secs)
 {
@@ -158,9 +162,8 @@ void TimerWidget::setTimeLabel(std::chrono::seconds secs)
     ui->time->setText(formattedTime);
 }
 
-TimerWidget::TimerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TimerWidget)
+TimerWidget::TimerWidget(QWidget *parent) : QWidget(parent),
+                                            ui(new Ui::TimerWidget)
 {
     ui->setupUi(this);
     paused = false;

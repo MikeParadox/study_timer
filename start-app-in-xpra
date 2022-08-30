@@ -1,0 +1,2 @@
+#!/bin/sh
+DISPLAY=:100 QT_QPA_PLATFORM=xcb ./build/Study-Scheduler
