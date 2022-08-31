@@ -36,7 +36,7 @@ private:
     std::chrono::seconds totalTime;
     //const QString timerName{ "timer" };
     QString timerName;
-    bool paused;
+    bool isPaused;
     bool toBeDeleted;
     bool isStarted;
     bool isFinished;

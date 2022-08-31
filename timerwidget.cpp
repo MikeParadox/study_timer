@@ -14,9 +14,9 @@ using namespace std::literals; // for using literals like 10s
 
 void TimerWidget::handleStartButton()
 {
-    if (paused == false)
+    if (isPaused == false)
     {
-        ui->startButton->setEnabled(false);
+        ui->startButton->setDisabled(true);
         ui->pauseButton->setEnabled(true);
         ui->resetButton->setEnabled(true);
         isStarted = true;
@@ -25,7 +25,7 @@ void TimerWidget::handleStartButton()
     }
     else
     {
-        paused = false;
+        isPaused = false;
         ui->pauseButton->setEnabled(true);
         ui->resetButton->setEnabled(true);
         ui->startButton->setDisabled(true);
@@ -34,9 +34,9 @@ void TimerWidget::handleStartButton()
 
 void TimerWidget::handlePauseButton()
 {
-    if (!paused)
+    if (!isPaused)
     {
-        paused = true;
+        isPaused = true;
         ui->startButton->setEnabled(true);
         ui->pauseButton->setDisabled(true);
     }
@@ -50,7 +50,7 @@ void TimerWidget::handleResetButton()
     ui->pauseButton->setDisabled(true);
     ui->resetButton->setDisabled(true);
     ui->editButton->setEnabled(true);
-    paused = true;
+    isPaused = true;
 }
 
 void TimerWidget::handleEditButton()
@@ -94,7 +94,7 @@ void TimerWidget::editTimer()
 
     timerName = t->getTimerName();
     ui->timerNameFieldOnTimer->setText(timerName);
-    paused = true;
+    isPaused = true;
     ui->pauseButton->setDisabled(true);
     ui->resetButton->setDisabled(true);
     ui->startButton->setEnabled(true);
@@ -109,7 +109,7 @@ int TimerWidget::timerLoop()
         //     finished();
         //     return 0;
         // }
-        if (!paused)
+        if (!isPaused)
         {
             totalTime -= 1s;
             setTimeLabel(totalTime);
@@ -141,9 +141,9 @@ void TimerWidget::initialize(TimerSelection *t)
 void TimerWidget::finished()
 {
     isStarted = false;
-    ui->pauseButton->setEnabled(false);
-    ui->resetButton->setEnabled(false);
-    ui->editButton->setEnabled(false);
+    ui->pauseButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
+    ui->editButton->setDisabled(true);
     ui->time->setText("Finished!");
     QSoundEffect effect;
     effect.setSource(QUrl("qrc:/sounds/alarm.wav"));
@@ -166,7 +166,7 @@ TimerWidget::TimerWidget(QWidget *parent) : QWidget(parent),
                                             ui(new Ui::TimerWidget)
 {
     ui->setupUi(this);
-    paused = false;
+    isPaused = false;
     toBeDeleted = false;
     isStarted = false;
     connect(ui->startButton, &QPushButton::released, this, &TimerWidget::handleStartButton);
