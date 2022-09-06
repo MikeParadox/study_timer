@@ -38,7 +38,7 @@ public:
     {
         if (TimerWidget->objectName().isEmpty())
             TimerWidget->setObjectName(QString::fromUtf8("TimerWidget"));
-        TimerWidget->resize(600, 150);
+        TimerWidget->resize(622, 150);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
